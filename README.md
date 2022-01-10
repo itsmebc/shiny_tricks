@@ -1,4 +1,2 @@
-# shiny_modules_demo
-Small game using stratégie du petit r.
-
-- Store inputs in a global variable to communicate with other modules
+# shiny_tricks
+Mini projects that incorporate Shiny tricks that I thought were interesting, and to showcase the versatility of Shiny.
