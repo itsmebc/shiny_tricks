@@ -1,1 +1,3 @@
-# Exploring Shiny modules' communication by using ThinkR's "stratégie du petit r."
+# Module communication
+
+Exploring Shiny modules' communication by using ThinkR's "stratégie du petit r."
