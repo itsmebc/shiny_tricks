@@ -1,3 +1,6 @@
+Try it out:
+https://itsmebc.shinyapps.io/table_joiner/
+
 Easily join your tables
 - Left join (left table + left table in common with right table (NAs possible))
 - Right join (right table + right table in common with left table)
