@@ -21,7 +21,7 @@ ui <- fluidPage(h2("Easily join tables by uploading them on the panel."),
                                   "Semi join" = 5, 
                                   "Anti join" = 6), 
                    selected = NULL),
-      textInput("by", label = ("By"))),
+      fluidRow(textInput("by", label = ("By")), actionButton("joinbutton", "Join"))),
     mainPanel(
       tabsetPanel(
         tabPanel("First dataframe", tableOutput("df1_contents"), verbatimTextOutput("df1_glimpse")),
@@ -67,7 +67,7 @@ server <- function(input, output) {
   df1 = reactive({ read.csv(input$df1$datapath, header = input$header) %>% mutate(across(.cols=everything(), as.factor))})
   df2 = reactive({ read.csv(input$df2$datapath, header = input$header) %>% mutate(across(.cols=everything(), as.factor))})
   
-  joinFunc <- reactive({
+  joinConditions = reactive({
     if(input$joins == 1) {
       left_join(df1(), df2(), by=input$by)
     }
@@ -88,10 +88,12 @@ server <- function(input, output) {
     }
   })
   
-
-  output$df3_contents = renderTable({
-    joinFunc()
+  observeEvent(input$joinbutton,{
+    output$df3_contents = renderTable({
+      joinConditions() %>% head()
     })
+  })
+  
 
   
   output$download <- downloadHandler(
@@ -99,7 +101,8 @@ server <- function(input, output) {
       paste("joined_df", ".csv", sep = "")
     },
     content = function(file) {
-      write.csv(joinFunc(), file, row.names = FALSE)
+      write.csv(
+        joinConditions(), file, row.names = FALSE)
     }
   )
   
